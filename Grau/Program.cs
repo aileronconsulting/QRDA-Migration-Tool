@@ -11,14 +11,7 @@ namespace Grau
         [STAThread]
         static void Main(string[] args)
         {
-            var cdaType = Assembly.GetExecutingAssembly().GetType("Category_I.POCD_MT000040ClinicalDocument");
-            var props = cdaType.GetProperties();
-//            foreach (var propertyInfo in props)
-//            {
-//                Console.WriteLine(propertyInfo.Name);
-//            }
-
-            var anyType = typeof (ANY);
+            var anyType = typeof(POCD_MT000040Section);
             var customAttributes = (IEnumerable<XmlIncludeAttribute>) anyType.GetCustomAttributes(typeof(XmlIncludeAttribute));
             foreach (var customAttribute in customAttributes)
             {
