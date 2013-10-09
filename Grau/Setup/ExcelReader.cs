@@ -1,17 +1,33 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using Category_I;
 using LinqToExcel;
 
-namespace Grau
+namespace Grau.Setup
 {
+    public class TemplateIdMap
+    {
+        public string TemplateTitle { get; set; }
+        public string TemplateType { get; set; }
+        public string TemplateId { get; set; }
+    }
+
+
+    public class CodeSystemMap
+    {
+        public string CodeSystemName { get; set; }
+        public string CodeSystemOid { get; set; }
+    }
+
     public class ExcelReader
     {
         private readonly  string _fileName;
 
-        public List<ExcelEntryLevelTemplate> ExcelEntryLevelTemplates { get; set; }
-        
+        public List<EntryLevelTemplate> ExcelEntryLevelTemplates { get; set; }
+
+
+
         public ExcelReader(string fileName)
         {
             _fileName = fileName;
@@ -23,9 +39,9 @@ namespace Grau
             var sheetNames = excel.GetWorksheetNames();
             ExcelEntryLevelTemplates = sheetNames.Select(name =>
                 {
-                    var sheet = excel.WorksheetNoHeader(name);
+                    var sheet = excel.WorksheetNoHeader((string) name);
                     var rows = sheet.ToList();
-                    var entry = new ExcelEntryLevelTemplate
+                    var entry = new EntryLevelTemplate
                         {
                             Name = rows[0][0].Value.ToString(),
                             Info = rows[1][0].Value.ToString(),
@@ -71,11 +87,11 @@ namespace Grau
                         entry.Info2Name = rows[firstRowOfConstraintTable][0].Value.ToString();
                         entry.Info2 = rows[firstRowOfConstraintTable][1].Value.ToString();
                         firstRowOfConstraintTable++;
-                        entry.InfoDetail = new List<ExcelEntryLevelTemplateDetail>();
+                        entry.InfoDetail = new List<EntryLevelTemplateDetail>();
                         for (var i = firstRowOfConstraintTable; i < rows.Count; ++i)
                         {
                             var row = rows[i];
-                            var detail = new ExcelEntryLevelTemplateDetail
+                            var detail = new EntryLevelTemplateDetail
                                 {
                                     Name = row[0],
                                     Xpath = row[1],

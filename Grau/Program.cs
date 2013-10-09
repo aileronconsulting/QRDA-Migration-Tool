@@ -4,18 +4,14 @@ using System.Linq;
 using System.Reflection;
 using System.Xml.Serialization;
 using Category_I;
+using Grau.Setup;
 using LinqToExcel;
 
 namespace Grau
 {
     class Program
     {
-        public class TemplateIdMap
-        {
-            public string TemplateTitle { get; set; }
-            public string TemplateType { get; set; }
-            public string TemplateId { get; set; }
-        }
+
 
         [STAThread]
         static void Main(string[] args)
@@ -28,28 +24,22 @@ namespace Grau
             var containsEntries = templates.Select(x => x.ContainEntries).Aggregate((f, s) => f.Union(s).ToList());
             var containEntry = new HashSet<string>(containsEntries);
 
+
             var excel = new ExcelQueryFactory("F:\\QRDA\\TemplateIds.xlsx");
             excel.AddMapping<TemplateIdMap>(t => t.TemplateId, "templateId");
             excel.AddMapping<TemplateIdMap>(t => t.TemplateTitle, "Template Title");
             excel.AddMapping<TemplateIdMap>(t => t.TemplateType, "Template Type");
             var templateIds = excel.Worksheet<TemplateIdMap>().ToList();
 
-
-            /*
-                     [XmlElement("act", typeof (POCD_MT000040Act))]
-        [XmlElement("encounter", typeof (POCD_MT000040Encounter))]
-        [XmlElement("observation", typeof (POCD_MT000040Observation))]
-        [XmlElement("observationMedia", typeof (POCD_MT000040ObservationMedia))]
-        [XmlElement("organizer", typeof (POCD_MT000040Organizer))]
-        [XmlElement("procedure", typeof (POCD_MT000040Procedure))]
-        [XmlElement("regionOfInterest", typeof (POCD_MT000040RegionOfInterest))]
-        [XmlElement("substanceAdministration",
-            typeof (POCD_MT000040SubstanceAdministration))]
-        [XmlElement("supply", typeof (POCD_MT000040Supply))]
-
-             */
+            var excel1 = new ExcelQueryFactory("F:\\QRDA\\CodeSystems.xlsx");
+            excel1.AddMapping<CodeSystemMap>(c => c.CodeSystemName, "Code System Name");
+            excel1.AddMapping<CodeSystemMap>(c => c.CodeSystemOid, "Code System OID");
+            var codeSystemsUsed = excel1.Worksheet<CodeSystemMap>().ToList();
 
         }
 
     }
+
+
+
 }

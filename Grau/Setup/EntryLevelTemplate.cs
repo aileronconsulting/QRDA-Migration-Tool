@@ -1,19 +1,19 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
-namespace Grau
+namespace Grau.Setup
 {
-    public class ExcelEntryLevelTemplate
+    public class EntryLevelTemplate
     {
         public string Name { get; set; }
         public string Info { get; set; }
         public List<string> UsedBy { get; set; }
         public List<string> ContainEntries { get; set; } 
         public string Info2 { get; set; }
-        public List<ExcelEntryLevelTemplateDetail> InfoDetail { get; set; }
+        public List<EntryLevelTemplateDetail> InfoDetail { get; set; }
         public string Info2Name { get; set; }
     }
 
-    public class ExcelEntryLevelTemplateDetail
+    public class EntryLevelTemplateDetail
     {
         public string Name { get; set; }
         public string Xpath { get; set; }
